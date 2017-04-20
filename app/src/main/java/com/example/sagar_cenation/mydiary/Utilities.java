@@ -26,7 +26,8 @@ public class Utilities {
             fos.close();
         } catch (IOException e) {
             e.printStackTrace();
-            return false; //tell the user something went wrong(mainly when not enough space on device)
+            //tell the user something went wrong(mainly when not enough space on device)
+            return false;
         }
 
         return true;

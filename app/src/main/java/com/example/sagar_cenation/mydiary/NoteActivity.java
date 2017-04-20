@@ -29,15 +29,14 @@ public class NoteActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
             case R.id.action_main_save:
-
+                saveNote();
             break;
         }
         return true;
     }
 
     private void saveNote() {
-        Note note = new Note(System.currentTimeMillis(), mEtTitle.getText().toString()
-                , mEtContent.getText().toString());
+        Note note = new Note(System.currentTimeMillis(), mEtTitle.getText().toString(), mEtContent.getText().toString());
         if(Utilities.saveNote(this, note)) {
             Toast.makeText(this, "your note is saved!", Toast.LENGTH_SHORT).show();
             finish(); // exit activity and go to main activity
