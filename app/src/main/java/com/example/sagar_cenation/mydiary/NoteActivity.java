@@ -11,12 +11,25 @@ public class NoteActivity extends AppCompatActivity {
 
     private EditText mEtTitle;
     private EditText mEtContent;
+
+    private String mNoteFileName;
+    private Note mLoadedNote;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_note);
         mEtTitle = (EditText) findViewById(R.id.note_et_title);
         mEtContent = (EditText) findViewById(R.id.note_et_content);
+
+        mNoteFileName = getIntent().getStringExtra("NOTE_FILE");
+        if(mNoteFileName != null && !mNoteFileName.isEmpty()) {
+            mLoadedNote = Utilities.getNoteByName(this, mNoteFileName);
+            if(mLoadedNote != null) {
+                mEtTitle.setText(mLoadedNote.getTitle());
+                mEtTitle.setText(mLoadedNote.getContent());
+            }
+        }
     }
 
     @Override
@@ -36,8 +49,13 @@ public class NoteActivity extends AppCompatActivity {
     }
 
     private void saveNote() {
-        Note note = new Note(System.currentTimeMillis(), mEtTitle.getText().toString(), mEtContent.getText().toString());
-        if(Utilities.saveNote(this, note)) {
+        Note note;
+        if(mLoadedNote == null) {
+            note = new Note(System.currentTimeMillis(), mEtTitle.getText().toString(), mEtContent.getText().toString());
+        } else {
+            note = new Note(mLoadedNote.getDateTime(), mEtTitle.getText().toString(), mEtContent.getText().toString());
+        }
+            if(Utilities.saveNote(this, note)) {
             Toast.makeText(this, "your note is saved!", Toast.LENGTH_SHORT).show();
             finish(); // exit activity and go to main activity
 
