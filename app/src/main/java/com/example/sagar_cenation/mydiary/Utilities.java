@@ -41,11 +41,10 @@ public class Utilities {
     public static ArrayList<Note> getAllSavedNotes(Context context) {
         ArrayList<Note> notes = new ArrayList<>();
 
-        File filesDir;
-        filesDir = context.getFilesDir();
+        File filesDir = context.getFilesDir();
         ArrayList<String> noteFiles = new ArrayList<>();
 
-        for(String file: filesDir.list()) {
+        for(String file : filesDir.list()) {
             if(file.endsWith(FILE_EXTENSION)) {
                 noteFiles.add(file);
             }
@@ -67,14 +66,15 @@ public class Utilities {
         }
         return notes;
     }
-    public static Note getNoteByName(Context context, String filename) {
-        File file = new File(context.getFilesDir(), filename);
+
+    public static Note getNoteByName(Context context, String fileName) {
+        File file = new File(context.getFilesDir(), fileName);
         Note note;
         if(file.exists()) {
             FileInputStream fis;
             ObjectInputStream ois;
             try {
-                fis = context.openFileInput(filename);
+                fis = context.openFileInput(fileName);
                 ois = new ObjectInputStream(fis);
                 note = (Note) ois.readObject();
                 fis.close();
